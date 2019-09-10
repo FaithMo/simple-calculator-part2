@@ -6,15 +6,41 @@ class Calculator_instance {
     add(){
         let sum=0;
         for(let x=0; x<arguments.length; x++){
+            if(arguments[x] === "LAST"){
+                arguments[x] = this.lastNumber;
+            }
+
+            if(arguments[x] === "SLOT_1"){
+                arguments[x] = this.get_slot(1);
+            }
+
+            if(arguments[x] === "SLOT_2"){
+                arguments[x] = this.get_slot(2);
+            }
+
             sum +=arguments[x];
         }
-    this.lastNumber = sum;
+        this.lastNumber = sum;
         return sum;
 
     }
+
     multiply(){
         let product=1;
         for(let x=0; x<arguments.length; x++){
+
+            if(arguments[x] === "LAST"){
+                arguments[x] = this.lastNumber;
+            }
+
+            if(arguments[x] === "SLOT_1"){
+                arguments[x] = this.get_slot(1);
+            }
+
+            if(arguments[x] === "SLOT_2"){
+                arguments[x] = this.get_slot(2);
+            }
+
             product *= arguments[x];
         }
         this.lastNumber = product;
@@ -26,12 +52,10 @@ class Calculator_instance {
     set_slot(x){
 
         this.arr[x] = this.lastNumber;
-        return this.lastNumber;
+        return this.arr[x];
     }
     get_slot(x){
-        //return this.arr.push(this.lastNumber);
-        //return "Slot got: " + this.arr.push(this.lastNumber);
-        this.arr[x] = this.lastNumber;
+        
         return this.arr[x];
     }
 
@@ -39,17 +63,8 @@ class Calculator_instance {
 let newCalculator = new Calculator_instance();
 
 
-console.log(newCalculator.add(1,2));
-console.log(newCalculator.set_slot(1));
-console.log(newCalculator.get_slot(1));
 
-console.log(newCalculator.add(10,20));
-console.log(newCalculator.set_slot(2));
-console.log(newCalculator.get_slot(2));
+//console.log(newCalculator.add("LAST",200));
 
-console.log(newCalculator.add(100,200));
-console.log(newCalculator.set_slot(1));
-console.log(newCalculator.get_slot(2));
-console.log(newCalculator.last());
 
 
