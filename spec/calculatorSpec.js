@@ -1,3 +1,5 @@
+let newCalculator = require('../src/calculator');
+
 describe("Calculate", function () {
 
     it("should add zeros", function () {

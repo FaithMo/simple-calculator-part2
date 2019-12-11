@@ -1,70 +1,71 @@
 class Calculator_instance {
     constructor(){
         this.arr = [];
+        this.arrSlot = [];
         this.lastNumber = 0;
     }
     add(){
         let sum=0;
-        for(let x=0; x<arguments.length; x++){
-            if(arguments[x] === "LAST"){
-                arguments[x] = this.lastNumber;
+        if(typeof arguments[0] == "string"){
+            if (arguments[0].match(/\d+/)) {
+                let slot_num = arguments[0].match(/\d+/);
+                slot_num = Number(slot_num);
+                sum = this.get_slot(slot_num) + arguments[1];
+                return sum;
             }
-
-            if(arguments[x] === "SLOT_1"){
-                arguments[x] = this.get_slot(1);
-            }
-
-            if(arguments[x] === "SLOT_2"){
-                arguments[x] = this.get_slot(2);
-            }
-
-            sum +=arguments[x];
         }
+
+        if (arguments[0] == "LAST") {
+            sum = arguments[1] + this.last();
+            return sum;
+        }
+        for (let i = 0; i < arguments.length; i++) {
+            sum += arguments[i];
+        }
+        
         this.lastNumber = sum;
         return sum;
-
     }
 
     multiply(){
         let product=1;
-        for(let x=0; x<arguments.length; x++){
-
-            if(arguments[x] === "LAST"){
-                arguments[x] = this.lastNumber;
+        if (typeof arguments[0] == "string") {
+            if (arguments[0].match(/\d+/)) {
+              let slot_num = arguments[0].match(/\d+/);
+              slot_num = Number(slot_num);
+              product = this.get_slot(slot_num) * arguments[1];
+              return product;
             }
+          }
+      
+          if (arguments[0] == "LAST") {
+            product = arguments[1] * this.last();
+            return product;
+          }
+          for (let i = 0; i < arguments.length; i++) {
+            product = product * arguments[i];
+          }
+          this.lastNumber = product;
+          return product;
+        
+    };
 
-            if(arguments[x] === "SLOT_1"){
-                arguments[x] = this.get_slot(1);
-            }
-
-            if(arguments[x] === "SLOT_2"){
-                arguments[x] = this.get_slot(2);
-            }
-
-            product *= arguments[x];
-        }
-        this.lastNumber = product;
-        return product;
-    }
     last(){
-        return  this.lastNumber;
+        return this.lastNumber;
     }
     set_slot(x){
 
-        this.arr[x] = this.lastNumber;
-        return this.arr[x];
+        this.arrSlot[x] = this.last();
+        return this.arrSlot[x];
     }
     get_slot(x){
         
-        return this.arr[x];
+        let value_inside_array_indexed = this.arrSlot[x];
+        return value_inside_array_indexed;
     }
 
 }
-let newCalculator = new Calculator_instance();
 
 
-
-//console.log(newCalculator.add("LAST",200));
-
-
-
+let newCalc = new Calculator_instance();
+module.exports = newCalc;
